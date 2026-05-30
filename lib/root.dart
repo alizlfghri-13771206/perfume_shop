@@ -1,9 +1,12 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:parfumo_ui/screens/articles_screen.dart';
 import 'package:parfumo_ui/screens/collection_screen.dart';
 import 'package:parfumo_ui/screens/home_screen.dart';
 import 'package:parfumo_ui/screens/profile_screen.dart';
 import 'package:parfumo_ui/screens/search_screen.dart';
+import 'package:parfumo_ui/screens/shoping_cart_screen.dart';
+import 'package:parfumo_ui/screens/store_screen.dart';
 import 'package:parfumo_ui/theme/app_theme.dart';
 
 class RootPage extends StatefulWidget {
@@ -27,9 +30,9 @@ class _RootPageState extends State<RootPage> {
   List<Widget> pages() {
     return [
       const HomeScreen(),
-      const SearchScreen(),
-      const CollectionScreen(),
-      const ProfileScreen(),
+      const StoreScreen(),
+      const ShopingCartScreen(),
+      const ArticlesScreen(),
     ];
   }
 

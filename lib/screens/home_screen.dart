@@ -49,21 +49,22 @@ class _HomeScreenState extends State<HomeScreen>
     }
     return indicators;
   }
-void autoChangePage() async {
-  await Future.delayed(const Duration(seconds: 3));
-  
-  if (!mounted) return;
-  
-  final nextIndex = (currentIndex + 1) % 5;
-  
-  pageController.animateToPage(
-    nextIndex,
-    duration: const Duration(milliseconds: 500),
-    curve: Curves.easeInOut,
-  );
-  
-  autoChangePage();
-}
+
+  void autoChangePage() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    final nextIndex = (currentIndex + 1) % 5;
+
+    pageController.animateToPage(
+      nextIndex,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+
+    autoChangePage();
+  }
 
   @override
   void initState() {
@@ -90,9 +91,9 @@ void autoChangePage() async {
     final screenWidth = MediaQuery.of(context).size.width;
 
     // نسبت‌های نسبی بر اساس یک صفحه مرجع (800×390)
-    final heroHeight = screenHeight * 0.24;   // ≈200 روی 800px
+    final heroHeight = screenHeight * 0.24; // ≈200 روی 800px
     final cardListHeight = screenHeight * 0.24;
-    final cardWidth = screenWidth * 0.38;     // ≈155 روی 390px
+    final cardWidth = screenWidth * 0.38; // ≈155 روی 390px
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -487,65 +488,3 @@ class _PerfumeCard extends StatelessWidget {
   }
 }
 
-class _EvenetsListTile extends StatelessWidget {
-  final Events events;
-
-  const _EvenetsListTile({required this.events});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(5, 8, 5, 0),
-        padding:
-            const EdgeInsets.only(left: 2, right: 2, top: 1.5, bottom: 1.5),
-        decoration: BoxDecoration(
-          color: AppColors.bgCard,
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: Colors.black38),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    events.title,
-                    textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 25, 28, 41),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    events.content,
-                    textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 25, 28, 41),
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 14),
-            Container(
-              width: 70,
-              height: 70,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
-                  border: BoxBorder.all(color: Colors.black26, width: 1)),
-              child: Image.asset(events.image),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Perfume {
+  final String price;
   final String id;
   final String name;
   final String farsiName;
@@ -46,13 +47,14 @@ class Perfume {
     required this.farsiBrand,
     required this.summery,
     required this.brandGradient,
-    required this.brandColor,
+    required this.brandColor, required this.price,
   });
 }
 
 final List<Perfume> mockPerfumes = [
   Perfume(
       id: '1',
+      price: "37000000",
       brandColor: const Color.fromARGB(255, 71, 6, 1),
       brandGradient: const LinearGradient(
           colors: [Color(0xFF2D120F), Color(0xFFD18E38)],
@@ -81,6 +83,8 @@ final List<Perfume> mockPerfumes = [
       image: 'assets/images/alex.webp'),
   Perfume(
       id: '2',
+            price: "15000000",
+
       brandColor: const Color(0xFF0A1428),
       brandGradient: const LinearGradient(
           colors: [Color(0xFF0A1428), Color(0xFF429CD6)],
@@ -111,6 +115,8 @@ final List<Perfume> mockPerfumes = [
       image: 'assets/images/y.webp'),
   Perfume(
       id: '3',
+            price: "45000000",
+
       brandColor: const Color(0xFF421A07),
       brandGradient: const LinearGradient(
           colors: [Color(0xFF421A07), Color(0xFFEAA34F)],
@@ -141,6 +147,8 @@ final List<Perfume> mockPerfumes = [
       image: 'assets/images/anf.webp'),
   Perfume(
       id: '4',
+            price: "20000000",
+
       brandColor: const Color(0xFF040814),
       brandGradient: const LinearGradient(colors: [
         Color(0xFF040814),
@@ -174,6 +182,8 @@ final List<Perfume> mockPerfumes = [
       image: 'assets/images/sav.webp'),
   Perfume(
       id: '5',
+            price: "32000000",
+
       brandColor: const Color(0xFF5A3825),
       brandGradient: const LinearGradient(
           colors: [Color(0xFF5A3825), Color(0xFFD9BCA3)],

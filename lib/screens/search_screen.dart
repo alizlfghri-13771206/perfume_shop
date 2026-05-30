@@ -199,10 +199,10 @@ class _SearchScreenState extends State<SearchScreen> {
           // Results
           Expanded(
             child: _results.isEmpty
-                ? const Center(
+                ?  Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Icon(
                           Icons.search_off,
                           color: AppColors.creamDim,
