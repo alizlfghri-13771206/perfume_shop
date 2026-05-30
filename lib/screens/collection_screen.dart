@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
-import '../models/perfume.dart';
-import '../widgets/perfume_bottle.dart';
+import 'package:parfumo_ui/theme/app_theme.dart';
+import 'package:parfumo_ui/models/perfume.dart';
 import 'detail_screen.dart';
 
 class CollectionScreen extends StatefulWidget {
@@ -140,10 +139,7 @@ class _StatsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final avgRating = perfumes.isEmpty
-        ? 0.0
-        : perfumes.map((p) => p.rating).reduce((a, b) => a + b) /
-            perfumes.length;
+
     final brands = perfumes.map((p) => p.brand).toSet().length;
 
     return Container(
@@ -152,14 +148,14 @@ class _StatsBar extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.gold.withOpacity(0.1),
-            AppColors.accent.withOpacity(0.05),
+            AppColors.gold.withValues(alpha:0.1),
+            AppColors.accent.withValues(alpha:0.05),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.gold.withOpacity(0.2)),
+        border: Border.all(color: AppColors.gold.withValues(alpha:0.2)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -169,12 +165,7 @@ class _StatsBar extends StatelessWidget {
             label: 'Fragrances',
             icon: Icons.water_drop_outlined,
           ),
-          _Divider(),
-          _StatItem(
-            value: avgRating.toStringAsFixed(1),
-            label: 'Avg Rating',
-            icon: Icons.star_outline,
-          ),
+        
           _Divider(),
           _StatItem(
             value: '$brands',
@@ -258,9 +249,9 @@ class _GridView extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(16)),
+                        BorderRadius.vertical(top: Radius.circular(16)),
                     gradient: RadialGradient(
                       colors: [
                         Colors.transparent,
@@ -268,8 +259,7 @@ class _GridView extends StatelessWidget {
                     ),
                   ),
                   child: Center(
-                    child: PerfumeBottleWidget(
-                        perfume: perfumes[i], size: 110),
+                    child: Image.asset(perfumes[i].image)
                   ),
                 ),
               ),
@@ -304,7 +294,7 @@ class _GridView extends StatelessWidget {
                             color: AppColors.gold, size: 12),
                         const SizedBox(width: 3),
                         Text(
-                          '${perfumes[i].rating}',
+                          perfumes[i].rating,
                           style: const TextStyle(
                             color: AppColors.gold,
                             fontSize: 11,
@@ -353,7 +343,7 @@ class _ListView extends StatelessWidget {
               SizedBox(
                 width: 50,
                 height: 70,
-                child: PerfumeBottleWidget(perfume: perfumes[i], size: 70),
+                child: Image.asset(perfumes[i].image),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -390,7 +380,7 @@ class _ListView extends StatelessWidget {
                 children: [
                   const Icon(Icons.star, color: AppColors.gold, size: 14),
                   Text(
-                    '${perfumes[i].rating}',
+                    perfumes[i].rating,
                     style: const TextStyle(
                       color: AppColors.gold,
                       fontSize: 13,

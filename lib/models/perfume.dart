@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 class Perfume {
   final String id;
   final String name;
+  final String farsiName;
+  final String farsiBrand;
+  final Gradient brandGradient;
+  final String summery;
   final String brand;
   final String year;
   final String gender;
   final String concentration;
-  final double rating;
-  final int votes;
+  final String rating;
   final List<String> topNotes;
   final List<String> middleNotes;
   final List<String> baseNotes;
@@ -18,8 +21,10 @@ class Perfume {
   final String description;
   final bool inCollection;
   final bool inWishlist;
+  final String image;
+  final Color brandColor;
 
-  const Perfume({
+  Perfume({
     required this.id,
     required this.name,
     required this.brand,
@@ -27,7 +32,6 @@ class Perfume {
     required this.gender,
     required this.concentration,
     required this.rating,
-    required this.votes,
     required this.topNotes,
     required this.middleNotes,
     required this.baseNotes,
@@ -37,135 +41,167 @@ class Perfume {
     required this.description,
     this.inCollection = false,
     this.inWishlist = false,
+    required this.image,
+    required this.farsiName,
+    required this.farsiBrand,
+    required this.summery,
+    required this.brandGradient,
+    required this.brandColor,
   });
 }
 
 final List<Perfume> mockPerfumes = [
-  const Perfume(
-    id: '1',
-    name: 'Alexandria II',
-    brand: 'XERJOFF',
-    year: '2012',
-    gender: 'مردانه - زننانه',
-    concentration: 'ادو پرفیوم',
-    rating: 9 / 10,
-    votes: 12840,
-    topNotes: ['apple', 'Lavender', 'Cinnamon'],
-    middleNotes: ['Cedar ', 'Rose', 'Snowdrop'],
-    baseNotes: ['Amber', 'Oud', 'Musk'],
-    accords: ['Woody', 'Oriental', 'Spicy', 'Sweet', 'Creamy'],
-    longevity: '9/10',
-    sillage: '9/10',
-    description:
-        '''عطری باشکوه، عمیق و سلطنتی از دنیای نیش‌پرفیوم‌هاست؛ رایحه‌ای که شکوه چوب عود را با لطافت اسطوخودوس، رز و وانیل در هم می‌آمیزد و حسی گرم، مخملی و اشرافی خلق می‌کند.
+  Perfume(
+      id: '1',
+      brandColor: const Color.fromARGB(255, 71, 6, 1),
+      brandGradient: const LinearGradient(
+          colors: [Color(0xFF2D120F), Color(0xFFD18E38)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter),
+      farsiName: "الکساندریا 2",
+      farsiBrand: "زرجوف",
+      summery: "با الکساندریا 2 پادشاه زمستان باش",
+      name: 'Alexandria II',
+      brand: 'XERJOFF',
+      year: '2012',
+      gender: 'مردانه - زنانه',
+      concentration: 'ادو پرفیوم',
+      rating: '9 / 10',
+      topNotes: ['سیب', 'اسطوخودوس', 'دارچین'],
+      middleNotes: ['سدر ', 'رُز', 'گل برف'],
+      baseNotes: ['کهربا', 'عود', 'مشک'],
+      accords: ['چوبی', 'شرقی', 'ادویه‌ای', 'شیرین', 'کرمی'],
+      longevity: '9/10',
+      sillage: '9/10',
+      description:
+          '''عطری باشکوه، عمیق و سلطنتی از دنیای نیش‌پرفیوم‌هاست؛ رایحه‌ای که شکوه چوب عود را با لطافت اسطوخودوس، رز و وانیل در هم می‌آمیزد و حسی گرم، مخملی و اشرافی خلق می‌کند.
 شروع عطر آرام و مرموز است، اما به‌تدریج به قلبی گرم و لوکس می‌رسد؛ جایی که چوب‌های شرقی، کهربا و مشک، امضایی فراموش‌نشدنی روی پوست باقی می‌گذارند.
 الکساندریا ۲ عطری برای کسانی‌ست که به دنبال رایحه‌ای خاص، ماندگار و عمیق هستند؛ عطری که بیشتر شبیه یک تجربه هنری‌ست تا فقط یک عطر روزمره''',
-    inCollection: true,
-  ),
-  const Perfume(
-    id: '2',
-    name: 'Bleu de Chanel',
-    brand: 'Chanel',
-    year: '2010',
-    gender: 'Men',
-    concentration: 'Eau de Parfum',
-    rating: 4.4,
-    votes: 18250,
-    topNotes: ['Citrus', 'Mint', 'Pink Pepper'],
-    middleNotes: ['Ginger', 'Nutmeg', 'Jasmine', 'Iso E Super'],
-    baseNotes: ['Cedar', 'Sandalwood', 'Frankincense', 'Vetiver'],
-    accords: ['Woody', 'Aromatic', 'Citrus', 'Fresh Spicy'],
-    longevity: 'Long Lasting',
-    sillage: '',
-    description:
-        'A woody aromatic fragrance that embodies free-spirited masculinity. A bold, decisive scent that breaks free from convention.',
-    inCollection: false,
-  ),
-  const Perfume(
-    id: '3',
-    name: 'Black Orchid',
-    brand: 'Tom Ford',
-    year: '2006',
-    gender: 'Unisex',
-    concentration: 'Eau de Parfum',
-    rating: 4.3,
-    votes: 9870,
-    topNotes: ['Truffle', 'Gardenia', 'Black Currant', 'Ylang-Ylang'],
-    middleNotes: ['Orchid', 'Spices', 'Lotus Wood', 'Fruity Notes'],
-    baseNotes: ['Patchouli', 'Vetiver', 'Sandalwood', 'Vanilla', 'Oakmoss'],
-    accords: ['Dark', 'Woody', 'Floral', 'Sweet', 'Earthy'],
-    longevity: 'Very Long Lasting',
-    sillage: '',
-    description:
-        'A rich, dark, and sensual fragrance. Black Orchid is a luxurious and sensual fragrance of rich, dark accords and an alluring potion of black orchids.',
-    inCollection: true,
-    inWishlist: false,
-  ),
-  const Perfume(
-    id: '4',
-    name: 'Santal 33',
-    brand: 'Le Labo',
-    year: '2011',
-    gender: 'Unisex',
-    concentration: 'Eau de Parfum',
-    rating: 4.2,
-    votes: 7650,
-    topNotes: ['Cardamom', 'Iris', 'Violet', 'Ambrette'],
-    middleNotes: [
-      'Sandalwood',
-      'Australian Sandalwood',
-      'Cedarwood',
-      'Leather'
-    ],
-    baseNotes: ['Musk', 'Papyrus', 'Amber'],
-    accords: ['Woody', 'Smoky', 'Leather', 'Warm Spicy', 'Powdery'],
-    longevity: 'Long Lasting',
-    sillage: ': Color(0xFF8B6E4A)',
-    description:
-        'A woody, smoky scent that captures the spirit of the American Southwest. Sandalwood and cedarwood create a warm, intimate trail.',
-    inCollection: false,
-    inWishlist: true,
-  ),
-  const Perfume(
-    id: '5',
-    name: 'La Vie Est Belle',
-    brand: 'Lancôme',
-    year: '2012',
-    gender: 'Women',
-    concentration: 'Eau de Parfum',
-    rating: 4.1,
-    votes: 15300,
-    topNotes: ['Blackcurrant', 'Pear'],
-    middleNotes: ['Iris', 'Jasmine', 'Orange Blossom'],
-    baseNotes: ['Praline', 'Vanilla', 'Patchouli', 'Sandalwood'],
-    accords: ['Sweet', 'Floral', 'Powdery', 'Fruity', 'Gourmand'],
-    longevity: 'Long Lasting',
-    sillage: '',
-    description:
-        'An iris gourmand with praline, vanilla and patchouli. La Vie Est Belle — life is beautiful — an ode to happiness and the freedom to choose one\'s own path.',
-    inCollection: true,
-    inWishlist: false,
-  ),
-  const Perfume(
-    id: '6',
-    name: 'Aventus',
-    brand: 'Creed',
-    year: '2010',
-    gender: 'Men',
-    concentration: 'Eau de Parfum',
-    rating: 4.6,
-    votes: 22100,
-    topNotes: ['Pineapple', 'Bergamot', 'Apple', 'Blackcurrant'],
-    middleNotes: ['Rose', 'Dry Birch', 'Moroccan Jasmine', 'Patchouli'],
-    baseNotes: ['Musk', 'Oakmoss', 'Ambergris', 'Vanilla'],
-    accords: ['Fruity', 'Woody', 'Smoky', 'Fresh', 'Chypre'],
-    longevity: 'Long Lasting',
-    sillage: '',
-    description:
-        'Celebrating the life of Napoleon Bonaparte — his ambition, power and determination — Aventus opens with a burst of fruity freshness.',
-    inCollection: false,
-    inWishlist: true,
-  ),
+      inCollection: true,
+      image: 'assets/images/alex.webp'),
+  Perfume(
+      id: '2',
+      brandColor: const Color(0xFF0A1428),
+      brandGradient: const LinearGradient(
+          colors: [Color(0xFF0A1428), Color(0xFF429CD6)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter),
+      farsiName: "وای",
+      farsiBrand: "ایوسن لورن",
+      summery:
+          "توی تابستون گرمته و میخوای خنک شی؟\n اینم عطر وای از برند ایسون لورن",
+      name: 'Y Eau de Parfum',
+      brand: 'YVES SAINT LAURENT ',
+      year: '2018',
+      gender: 'مردانه',
+      concentration: 'ادو پرفیوم',
+      rating: ' 8 / 10',
+      topNotes: ['سیب', 'ترنج', 'زنجبیل'],
+      middleNotes: ['شمعدانی', 'دانه سرو کوهی', 'سالویا'],
+      baseNotes: ['سدر', 'چوب عنبر', 'خس خس', 'صمغ کندر'],
+      accords: ['فرش', 'مصنوعی', 'شیرین', 'میوه‌ای'],
+      longevity: '8/10',
+      sillage: '7/10',
+      description:
+          '''یک عطر مدرن، همه‌کاره و به شدت محبوب که بر اساس سایت‌های مرجع، مظهر جذابیت و خلاقیت مردانه است. ترکیب این عطر بازی هوشمندانه‌ای بین شادابیِ میوه‌ای و تاریکیِ چوبی است.
+ این عطر شروعی خنک و انرژی‌بخش با سیب سبز و زنجبیل، قلبی گیاهی از مریم‌گلی، و پایه‌ای گرم و ماندگار از چوب عنبر و دانه تونکا.
+​ یک عطر «آچارفرانسه» واقعی؛ مناسب برای تمام فصول (جز روزهای خیلی داغ) و هماهنگ با هر دو استایل کژوال و رسمی.
+​ پخش بوی بسیار قدرتمند و ماندگاری بالای ۸ ساعت که بازخورد مثبت (تعریف و تمجید) فراوانی از اطرافیان جذب می‌کند.''',
+      inCollection: true,
+      image: 'assets/images/y.webp'),
+  Perfume(
+      id: '3',
+      brandColor: const Color(0xFF421A07),
+      brandGradient: const LinearGradient(
+          colors: [Color(0xFF421A07), Color(0xFFEAA34F)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter),
+      farsiName: "آنجلز شیر",
+      farsiBrand: "بای‌کیلیان",
+      summery: "دوست دارید ذوج جذابی باشید؟ \nآنجلز شیر بای‌کیلیان بپوشید",
+      name: 'Angels Share',
+      brand: 'BY KILIAN',
+      year: '2020',
+      gender: 'مردانه - زنانه',
+      concentration: 'ادو پرفیوم',
+      rating: '9 / 10',
+      topNotes: ['کنیاک'],
+      middleNotes: ['دارچین', 'درخت بلوط', 'دانه تونکا'],
+      baseNotes: ['پرالین', 'چوب صندل سفید', 'وانیل'],
+      accords: ['شیرین', 'خوراکی', 'ادویه ای', 'چوبی'],
+      longevity: '8/10',
+      sillage: '8/10',
+      description:
+          '''شاهکاری وکس، گرم و شیرین (گورماند) که بر اساس سایت‌های مرجع، الهام‌گرفته از اصالت فرانسوی خانواده‌ی معروف «هنسی» و سهمِ تبخیرشده‌ی کنیاک از بشکه‌های چوبی است.
+  شروعی الکلی و مجلل با کنیاک، قلبی گرم و ادویه‌ای از دارچین، دانه تونکا و چوب بلوط، و پایه‌ای به شدت اعتیادآور، شکلاتی و کرمی از پرالین و وانیل.
+ عطری بی‌رقیب برای فصول سرد (پاییز و زمستان) و قرارهای خاص شبانه؛ حسی از ابهت، ثروت و در عین حال صمیمیت را تداعی می‌کند.
+خط بو و پخش فوق‌العاده قدرتمند با ماندگاری طولانی‌مدت که جذابیت بالایی دارد و تحسین اطرافیان را به همراه می‌آورد.''',
+      inCollection: true,
+      inWishlist: true,
+      image: 'assets/images/anf.webp'),
+  Perfume(
+      id: '4',
+      brandColor: const Color(0xFF040814),
+      brandGradient: const LinearGradient(colors: [
+        Color(0xFF040814),
+        Color(0xFF1A325C),
+      ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+      farsiName: "ساواج الکسیر",
+      farsiBrand: "دیور",
+      summery: "دوست داری رایحه اصالت رو بدونی؟\n ساواج الکسیر بزن",
+      name: 'Sauvage Elixir',
+      brand: 'DIOR',
+      year: '2021',
+      gender: 'مردانه',
+      concentration: 'ادو پرفیوم',
+      rating: '8.10',
+      topNotes: ['هل', 'دارچین', 'گریپ فروت', 'جوز'],
+      middleNotes: [
+        'اسطوخودوس',
+      ],
+      baseNotes: ['کهربا', 'شیرین بیان', 'نعناع هندی', 'چوب صندل', 'خس خس'],
+      accords: ['ادویه‌ای', 'چوبی', 'شیرین', 'فرش', 'مصنوعی'],
+      longevity: '9/10',
+      sillage: ': 9/10',
+      description: '''
+
+تاریک، ادویه‌ای و به شدت قدرتمند که بر اساس سایت‌های مرجع، نسخه‌ای بسیار غلیظ، لوکس و مدرن از خانواده‌ی محبوب ساواج است که روحی کلاسیک و باوقار دارد.
+انفجاری تند، داغ و غنی از دارچین، جوز هندی و هل در ترکیب با گریپ‌فروت، قلبی بسیار باکیفیت و تمیز از اسطوخودوس (لوندر)، و پایه‌ای تاریک، چوبی و عمیق از شیرین‌بیان، چوب صندل و کهربا.
+ مناسب فصول سرد (پاییز و زمستان)و موقعیت‌های رسمی یا شبانه؛ عطری جدی، کاریزماتیک و باابهت که حس پختگی و قدرت مردانه را تداعی می‌کند.
+ماندگاری خوب همراه با پخش بو و خط بویی بسیار خوب که به راحتی فضای محیط را تحت تأثیر قرار می‌دهد.''',
+      inCollection: true,
+      inWishlist: true,
+      image: 'assets/images/sav.webp'),
+  Perfume(
+      id: '5',
+      brandColor: const Color(0xFF5A3825),
+      brandGradient: const LinearGradient(
+          colors: [Color(0xFF5A3825), Color(0xFFD9BCA3)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter),
+      farsiName: "آلتیر",
+      farsiBrand: "مارلی",
+      summery: "اعتماد بهنفس بیشتر با مارلی التیر",
+      name: 'Althaïr',
+      brand: 'PARFUMS de MARLY',
+      year: '2023',
+      gender: 'مردانه',
+      concentration: 'ادو پرفیوم',
+      rating: '8 / 10',
+      topNotes: ['ترنج', 'هل', 'دارچین', 'شکوفه پرتقال'],
+      middleNotes: ['لامی', 'وانیل'],
+      baseNotes: ['آمبروکسان', 'چوب گایاک', 'مشک', 'پرالین'],
+      accords: ['شیرین', 'خوراکی', 'کرمی', 'ادویه‌ای'],
+      longevity: '9/10',
+      sillage: '8/10',
+      description: '''
+شاهکاری لوکس، مدرن و شیرین که بر اساس سایت‌های مرجع، ستایشی باشکوه و متفاوت از رایحه ارزشمند «وانیل بربون» است و تضادی هوشمندانه میان نت‌های ادویه‌ایِ گرم و تازگیِ مرکباتی ایجاد می‌کند.
+ شروعی ادویه‌ای و نیمه‌شاداب با  دارچین، هل و شکوفه پرتقال ، قلبی غنی، کرمی و محوری از  وانیل بربون ، و پایه‌ای عمیق، تمیز و چوبی از چوب گایاک، آمبروکسان و مشک.
+گزینه‌ای بی‌نظیر برای فصول سرد (پاییز و زمستان)؛ عطری فوق‌العاده جذاب برای قرارهای شبانه و استفاده روزمره در هوای خنک که حسی از شیک‌پوشی، ثروت، گرما و صمیمیت را ساطع می‌کند.
+ ماندگاری بسیار طولانی‌مدت همراه با پخش بویی نرم و فریبنده که به دلیل ماهیت جذاب وانیل، به شدت آهنربای بازخورد مثبت و تعریف و تمجید اطرافیان است.''',
+      inCollection: true,
+      inWishlist: true,
+      image: 'assets/images/mar.webp'),
 ];
 
 final List<Perfume> myCollection =

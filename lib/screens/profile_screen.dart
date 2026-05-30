@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
-import '../models/perfume.dart';
-import '../widgets/perfume_bottle.dart';
+import 'package:parfumo_ui/theme/app_theme.dart';
+import 'package:parfumo_ui/models/perfume.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -87,7 +86,7 @@ class ProfileScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
               decoration: BoxDecoration(
-                color: AppColors.gold.withOpacity(0.15),
+                color: AppColors.gold.withValues(alpha:0.15),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -129,14 +128,14 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Fragrance DNA
-            _SectionTitle(title: 'Fragrance DNA'),
+            const _SectionTitle(title: 'Fragrance DNA'),
             const SizedBox(height: 10),
-            _FragranceDNA(),
+            const _FragranceDNA(),
 
             const SizedBox(height: 20),
 
             // Recent Activity
-            _SectionTitle(title: 'Recently Worn'),
+            const _SectionTitle(title: 'Recently Worn'),
             const SizedBox(height: 10),
             ...myCollection.take(3).map(
                   (p) => _WornTile(perfume: p),
@@ -145,13 +144,13 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Settings
-            _SectionTitle(title: 'Settings'),
+            const _SectionTitle(title: 'Settings'),
             const SizedBox(height: 10),
-            _SettingsItem(icon: Icons.notifications_outlined, label: 'Notifications'),
-            _SettingsItem(icon: Icons.language, label: 'Language'),
-            _SettingsItem(icon: Icons.dark_mode_outlined, label: 'Appearance'),
-            _SettingsItem(icon: Icons.privacy_tip_outlined, label: 'Privacy'),
-            _SettingsItem(
+            const _SettingsItem(icon: Icons.notifications_outlined, label: 'Notifications'),
+            const _SettingsItem(icon: Icons.language, label: 'Language'),
+            const _SettingsItem(icon: Icons.dark_mode_outlined, label: 'Appearance'),
+            const _SettingsItem(icon: Icons.privacy_tip_outlined, label: 'Privacy'),
+            const _SettingsItem(
               icon: Icons.logout,
               label: 'Sign Out',
               isDestructive: true,
@@ -311,7 +310,7 @@ class _WornTile extends StatelessWidget {
           SizedBox(
             width: 44,
             height: 60,
-            child: PerfumeBottleWidget(perfume: perfume, size: 60),
+            child: Image.asset(perfume.image),
           ),
           const SizedBox(width: 12),
           Expanded(

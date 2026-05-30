@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
-import '../models/perfume.dart';
-import '../widgets/perfume_bottle.dart';
+import 'package:parfumo_ui/theme/app_theme.dart';
+import 'package:parfumo_ui/models/perfume.dart';
 import 'detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -158,7 +157,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     decoration: BoxDecoration(
                       color: sel
-                          ? AppColors.gold.withOpacity(0.2)
+                          ? AppColors.gold.withValues(alpha:0.2)
                           : AppColors.bgSurface,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
@@ -266,14 +265,14 @@ class _SearchResultTile extends StatelessWidget {
               height: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                gradient: RadialGradient(
+                gradient: const RadialGradient(
                   colors: [
                     Colors.transparent,
                   ],
                 ),
               ),
               child: Center(
-                child: PerfumeBottleWidget(perfume: perfume, size: 75),
+                child:Image.asset(perfume.image)
               ),
             ),
             const SizedBox(width: 12),

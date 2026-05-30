@@ -9,6 +9,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
+  animated_bottom_navigation_bar: ^1.4.0
   flutter:
     sdk: flutter
   material_color_utilities: ^0.13.0
@@ -23,3 +24,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/e/

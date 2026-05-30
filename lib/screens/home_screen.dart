@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:parfumo_ui/models/events.dart';
 import 'package:parfumo_ui/theme/app_theme.dart';
 import 'package:parfumo_ui/models/perfume.dart';
-import 'package:parfumo_ui/widgets/perfume_bottle.dart';
 import 'package:parfumo_ui/screens/detail_screen.dart';
-import "package:parfumo_ui/utils/persian_numbers.dart";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,17 +15,60 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnim;
+  int currentIndex = 0;
+
   int _selectedCategory = 0;
+  final PageController pageController = PageController(initialPage: 0);
+
   final List<String> _categories = [
-    'پر بازدید ها ',
-    'تازه ها',
+    'پربازدیدها',
+    'تازه‌ها',
     'مردانه',
     'زنانه',
   ];
 
+  Widget _indicator(bool isActive) {
+    return AnimatedContainer(
+      margin: const EdgeInsets.only(right: 2),
+      duration: const Duration(microseconds: 600),
+      decoration: const BoxDecoration(
+          color: Color.fromARGB(191, 59, 39, 31), shape: BoxShape.circle),
+      height: 8,
+      width: isActive ? 14 : 6,
+    );
+  }
+
+  List<Widget> _buildIndicator() {
+    List<Widget> indicators = [];
+    for (int i = 0; i < 5; i++) {
+      if (i == currentIndex) {
+        indicators.add(_indicator(true));
+      } else {
+        indicators.add(_indicator(false));
+      }
+    }
+    return indicators;
+  }
+void autoChangePage() async {
+  await Future.delayed(const Duration(seconds: 3));
+  
+  if (!mounted) return;
+  
+  final nextIndex = (currentIndex + 1) % 5;
+  
+  pageController.animateToPage(
+    nextIndex,
+    duration: const Duration(milliseconds: 500),
+    curve: Curves.easeInOut,
+  );
+  
+  autoChangePage();
+}
+
   @override
   void initState() {
     super.initState();
+    autoChangePage();
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -43,356 +85,288 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: FadeTransition(
-        opacity: _fadeAnim,
-        child: CustomScrollView(
-          slivers: [
-            // App Bar
-            SliverAppBar(
-              pinned: true,
-              backgroundColor: AppColors.bg,
-              expandedHeight: 0,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                      height: 35,
-                      width: 35,
-                      child: Image.asset("assets/images/profile.png")),
-                  SizedBox(
-                      height: 132,
-                      width: 132,
-                      child: Image.asset("assets/images/logo-h.png")),
-                  SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset("assets/images/notif.png")),
-                ],
-              ),
-            ),
+    // ── تنها تغییر: گرفتن سایز صفحه ──
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
-            // Greeting
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+    // نسبت‌های نسبی بر اساس یک صفحه مرجع (800×390)
+    final heroHeight = screenHeight * 0.24;   // ≈200 روی 800px
+    final cardListHeight = screenHeight * 0.24;
+    final cardWidth = screenWidth * 0.38;     // ≈155 روی 390px
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: FadeTransition(
+          opacity: _fadeAnim,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+            child: Column(
+              children: [
+                // HEADER
+                const Column(
                   children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'فروشگاه عطرآمین',
-                        style: TextStyle(
-                          color: AppColors.cream,
-                          fontSize: 26,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: -0.5,
-                          height: 1.1,
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'فروشگاه عطرآمین',
+                          style: TextStyle(
+                            color: AppColors.cream,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    SizedBox(height: 10),
                   ],
                 ),
-              ),
-            ),
 
-            // Search Bar
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                child: GestureDetector(
-                  onTap: () {
-                    // Navigate to search
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF2F2F2),
-                      borderRadius: BorderRadius.circular(40),
-                      border: Border.all(color: Colors.white),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
+                // search bar
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 16, 5, 0),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF2F2F2),
+                        borderRadius: BorderRadius.circular(40),
+                        border: Border.all(color: Colors.white),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
                             alignment: Alignment.topCenter,
                             padding: const EdgeInsets.all(10),
                             decoration: const BoxDecoration(
                                 color: Colors.white, shape: BoxShape.circle),
-                            child: const Icon(
-                              Icons.search,
-                              size: 30,
-                            )),
-                        const Text(
-                          'کالای مورد نظرتان را جستجو نمایید...',
-                          textAlign: TextAlign.right,
-                          textDirection: TextDirection.rtl,
-                          style: TextStyle(
-                            color: Colors.black38,
-                            fontSize: 14,
+                            child: const Icon(Icons.search, size: 30),
+                          ),
+                          const Text(
+                            'کالای مورد نظرتان را جستجو نمایید...',
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              color: Colors.black38,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                // HERO PAGEVIEW
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    height: heroHeight,
+                    child: Stack(
+                      children: [
+                        PageView(
+                          allowImplicitScrolling: true,
+                          onPageChanged: (value) {
+                            setState(() {
+                              currentIndex = value;
+                            });
+                          },
+                          controller: pageController,
+                          children: [
+                            _HeroCard(
+                              perfume: mockPerfumes[0],
+                              imageHeightFraction: 1.2,
+                              imageWidthFraction: 0.6,
+                              imageTopFraction: -0.1,
+                              imageLeftFraction: -0.15,
+                            ),
+                            _HeroCard(
+                              perfume: mockPerfumes[1],
+                              imageHeightFraction: 1.05,
+                              imageWidthFraction: 0.49,
+                              imageTopFraction: -0.1,
+                              imageLeftFraction: -0.1,
+                            ),
+                            _HeroCard(
+                              perfume: mockPerfumes[2],
+                              imageHeightFraction: 1.0,
+                              imageWidthFraction: 0.47,
+                              imageTopFraction: 0.0,
+                              imageLeftFraction: -0.05,
+                            ),
+                            _HeroCard(
+                              perfume: mockPerfumes[3],
+                              imageHeightFraction: 1.05,
+                              imageWidthFraction: 0.51,
+                              imageTopFraction: -0.08,
+                              imageLeftFraction: -0.08,
+                            ),
+                            _HeroCard(
+                              perfume: mockPerfumes[4],
+                              imageHeightFraction: 1.05,
+                              imageWidthFraction: 0.51,
+                              imageTopFraction: -0.12,
+                              imageLeftFraction: -0.1,
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: screenWidth * 0.4,
+                          child: Row(
+                            children: _buildIndicator(),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-            ),
 
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 12),
-                    _HeroCard(perfume: mockPerfumes[0]),
-                  ],
-                ),
-              ),
-            ),
-
-            // Category Filter
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: _SectionHeader(
-                        title: 'Trending',
-                        action: 'See all',
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 36,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        itemCount: _categories.length,
-                        itemBuilder: (ctx, i) => _CategoryChip(
-                          label: _categories[i],
-                          selected: _selectedCategory == i,
-                          onTap: () => setState(() => _selectedCategory = i),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Horizontal Perfume List
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 230,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-                  itemCount: mockPerfumes.length,
-                  itemBuilder: (ctx, i) => _PerfumeCard(
-                    perfume: mockPerfumes[i],
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => DetailScreen(perfume: mockPerfumes[i]),
+                // CATEGORIES
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 15),
+                  child: SizedBox(
+                    height: 40,
+                    child: ListView.builder(
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _categories.length,
+                      itemBuilder: (context, index) => _CategoryChip(
+                        label: _categories[index],
+                        selected: _selectedCategory == index,
+                        onTap: () {
+                          setState(() => _selectedCategory = index);
+                        },
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
 
-            // New Arrivals
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                child:
-                    _SectionHeader(title: 'New Arrivals', action: 'View all'),
-              ),
-            ),
-
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (ctx, i) => _ListTilePerfume(
-                  perfume: mockPerfumes[mockPerfumes.length - 1 - i],
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => DetailScreen(
-                        perfume: mockPerfumes[mockPerfumes.length - 1 - i],
-                      ),
-                    ),
-                  ),
-                ),
-                childCount: 3,
-              ),
-            ),
-
-            const SliverToBoxAdapter(child: SizedBox(height: 100)),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SectionHeader extends StatelessWidget {
-  final String title;
-  final String action;
-
-  const _SectionHeader({required this.title, required this.action});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            color: AppColors.cream,
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 0.2,
-          ),
-        ),
-        Text(
-          action,
-          style: const TextStyle(
-            color: AppColors.gold,
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _HeroCard extends StatelessWidget {
-  final Perfume perfume;
-
-  const _HeroCard({required this.perfume});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 180,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.bgSurface,
-            AppColors.bg,
-          ],
-        ),
-        border: Border.all(color: AppColors.divider),
-      ),
-      child: Stack(
-        children: [
-          // Background glow
-          Positioned(
-            right: -10,
-            top: -10,
-            child: Container(
-              width: 160,
-              height: 160,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    Colors.transparent,
-                  ],
-                ),
-              ),
-            ),
-          ),
-          // عکس باتل عطر
-          Positioned(
-            right: 20,
-            bottom: 0,
-            child: PerfumeBottleWidget(perfume: perfume, size: 160),
-          ),
-          // Info
-          Positioned(
-            left: 20,
-            top: 24,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                
-                const SizedBox(height: 10),
+                // PERFUME CARDS
                 SizedBox(
-                  width: 180,
-                  child: Text(
-                    perfume.name,
-                    style: const TextStyle(
-                      color: AppColors.cream,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800,
-                      height: 1.2,
+                  height: cardListHeight,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    reverse: true,
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    itemCount: mockPerfumes.length,
+                    itemBuilder: (context, index) => _PerfumeCard(
+                      perfume: mockPerfumes[index],
+                      cardWidth: cardWidth,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                DetailScreen(perfume: mockPerfumes[index]),
+                          ),
+                        );
+                      },
                     ),
-                    maxLines: 2,
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  perfume.brand,
-                  style: const TextStyle(
-                    color: AppColors.creamDim,
-                    fontSize: 13,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: AppColors.gold, size: 14),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${perfume.rating}',
-                      style: const TextStyle(
-                        color: AppColors.gold,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      '(${_formatVotes(perfume.votes)})',
-                      style: const TextStyle(
-                        color: AppColors.creamDim,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
+}
 
-  String _formatVotes(int v) {
-    if (v >= 1000) return '${(v / 1000).toStringAsFixed(1)}k';
-    return '$v';
+// ── _HeroCard ──────────────────────────────────────────────────────────────
+// به جای مقادیر pixel ثابت، fraction (نسبت) می‌گیرد و با LayoutBuilder حل می‌کند
+class _HeroCard extends StatelessWidget {
+  final Perfume perfume;
+  final double imageHeightFraction;
+  final double imageWidthFraction;
+  final double imageTopFraction;
+  final double imageLeftFraction;
+
+  const _HeroCard({
+    required this.perfume,
+    required this.imageHeightFraction,
+    required this.imageWidthFraction,
+    required this.imageTopFraction,
+    required this.imageLeftFraction,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final h = constraints.maxHeight;
+        final w = constraints.maxWidth;
+        return Stack(
+          children: [
+            Container(
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              height: h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: perfume.brandGradient.withOpacity(.3),
+                border: Border.all(color: AppColors.divider),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    perfume.name,
+                    textDirection: TextDirection.rtl,
+                    style: const TextStyle(
+                      color: AppColors.cream,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      height: 1.5,
+                    ),
+                    maxLines: 2,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "${perfume.farsiBrand}|${perfume.brand} ",
+                    textDirection: TextDirection.rtl,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: perfume.brandColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    perfume.summery,
+                    textDirection: TextDirection.rtl,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              height: h * imageHeightFraction,
+              width: w * imageWidthFraction,
+              top: h * imageTopFraction,
+              left: w * imageLeftFraction,
+              child: Image.asset(perfume.image),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
+// ── _CategoryChip ─────────────────────────────────────────────────────────
+// بدون تغییر
 class _CategoryChip extends StatelessWidget {
   final String label;
   final bool selected;
@@ -410,20 +384,18 @@ class _CategoryChip extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        margin: const EdgeInsets.only(right: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: selected ? AppColors.gold : AppColors.bgSurface,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: selected ? AppColors.gold : AppColors.divider,
-          ),
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: selected
+            ? BoxDecoration(
+                border: BoxBorder.fromLTRB(
+                    bottom: const BorderSide(color: Colors.orange, width: 2)))
+            : const BoxDecoration(),
         child: Text(
           label,
+          textDirection: TextDirection.rtl,
           style: TextStyle(
-            color: selected ? AppColors.bg : AppColors.creamDim,
-            fontSize: 13,
+            color: selected ? Colors.black : Colors.black45,
+            fontSize: 16,
             fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
           ),
         ),
@@ -432,45 +404,37 @@ class _CategoryChip extends StatelessWidget {
   }
 }
 
+// ── _PerfumeCard ──────────────────────────────────────────────────────────
+// عرض از بیرون (cardWidth) می‌گیرد
 class _PerfumeCard extends StatelessWidget {
   final Perfume perfume;
   final VoidCallback onTap;
+  final double cardWidth;
 
-  const _PerfumeCard({required this.perfume, required this.onTap});
+  const _PerfumeCard({
+    required this.perfume,
+    required this.onTap,
+    required this.cardWidth,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 140,
-        margin: const EdgeInsets.only(right: 12),
+        width: cardWidth,
+        margin: const EdgeInsets.only(right: 10, left: 8),
+        padding: const EdgeInsets.only(left: 5, right: 5),
         decoration: BoxDecoration(
-          color: AppColors.bgCard,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.divider),
+          color: AppColors.accentLight.withValues(alpha: .06),
+          borderRadius: BorderRadius.circular(35),
+          border: Border.all(color: Colors.black54),
         ),
         child: Column(
           children: [
-            // Bottle area
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(16)),
-                  gradient: RadialGradient(
-                    center: Alignment.center,
-                    colors: [
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
-                child: Center(
-                  child: PerfumeBottleWidget(perfume: perfume, size: 110),
-                ),
-              ),
+              child: Image.asset(perfume.image),
             ),
-            // Info
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: Column(
@@ -479,7 +443,7 @@ class _PerfumeCard extends StatelessWidget {
                   Text(
                     perfume.name,
                     style: const TextStyle(
-                      color: AppColors.cream,
+                      color: Colors.black,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
@@ -490,7 +454,7 @@ class _PerfumeCard extends StatelessWidget {
                   Text(
                     perfume.brand,
                     style: const TextStyle(
-                      color: AppColors.creamDim,
+                      color: Colors.black54,
                       fontSize: 10,
                     ),
                     maxLines: 1,
@@ -499,35 +463,18 @@ class _PerfumeCard extends StatelessWidget {
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      const Icon(Icons.star, color: AppColors.gold, size: 11),
+                      const Icon(Icons.star,
+                          color: Colors.amberAccent, size: 11),
                       const SizedBox(width: 3),
                       Text(
-                        '${perfume.rating}',
+                        perfume.rating,
                         style: const TextStyle(
-                          color: AppColors.gold,
+                          color: Colors.black87,
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _genderColor(perfume.gender).withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          perfume.gender[0],
-                          style: TextStyle(
-                            color: _genderColor(perfume.gender),
-                            fontSize: 9,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ],
@@ -538,107 +485,63 @@ class _PerfumeCard extends StatelessWidget {
       ),
     );
   }
-
-  Color _genderColor(String g) {
-    if (g == 'Men') return const Color(0xFF7AB0D0);
-    if (g == 'Women') return const Color(0xFFD07AB0);
-    return AppColors.gold;
-  }
 }
 
-class _ListTilePerfume extends StatelessWidget {
-  final Perfume perfume;
-  final VoidCallback onTap;
+class _EvenetsListTile extends StatelessWidget {
+  final Events events;
 
-  const _ListTilePerfume({required this.perfume, required this.onTap});
+  const _EvenetsListTile({required this.events});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {},
       child: Container(
-        margin: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-        padding: const EdgeInsets.all(14),
+        margin: const EdgeInsets.fromLTRB(5, 8, 5, 0),
+        padding:
+            const EdgeInsets.only(left: 2, right: 2, top: 1.5, bottom: 1.5),
         decoration: BoxDecoration(
           color: AppColors.bgCard,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: AppColors.divider),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: Colors.black38),
         ),
         child: Row(
           children: [
-            // Mini bottle
-            SizedBox(
-              width: 50,
-              height: 70,
-              child: PerfumeBottleWidget(perfume: perfume, size: 70),
-            ),
-            const SizedBox(width: 14),
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    perfume.name,
+                    events.title,
+                    textDirection: TextDirection.rtl,
+                    textAlign: TextAlign.right,
                     style: const TextStyle(
-                      color: AppColors.cream,
+                      color: Color.fromARGB(255, 25, 28, 41),
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Text(
-                    perfume.brand,
+                    events.content,
+                    textDirection: TextDirection.rtl,
+                    textAlign: TextAlign.right,
                     style: const TextStyle(
-                      color: AppColors.creamDim,
-                      fontSize: 12,
+                      color: Color.fromARGB(255, 25, 28, 41),
+                      fontSize: 13,
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Wrap(
-                    spacing: 4,
-                    children: perfume.accords
-                        .take(2)
-                        .map(
-                          (a) => Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 7,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.bgSurface,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              a,
-                              style: const TextStyle(
-                                color: AppColors.creamDim,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
                   ),
                 ],
               ),
             ),
-            Column(
-              children: [
-                const Icon(Icons.star, color: AppColors.gold, size: 14),
-                Text(
-                  '${perfume.rating}',
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Icon(
-                  Icons.chevron_right,
-                  color: AppColors.creamDim,
-                  size: 18,
-                ),
-              ],
+            const SizedBox(width: 14),
+            Container(
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  border: BoxBorder.all(color: Colors.black26, width: 1)),
+              child: Image.asset(events.image),
             ),
           ],
         ),

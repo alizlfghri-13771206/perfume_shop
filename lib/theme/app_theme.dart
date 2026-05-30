@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import "package:material_color_utilities/hct/hct.dart";
 
 class AppColors {
   static const bg = Color(0xFFFFFDFA);

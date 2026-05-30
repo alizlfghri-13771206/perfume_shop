@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
-import '../models/perfume.dart';
-import '../widgets/perfume_bottle.dart';
+import 'package:parfumo_ui/theme/app_theme.dart';
+import 'package:parfumo_ui/models/perfume.dart';
 
 class DetailScreen extends StatefulWidget {
   final Perfume perfume;
@@ -95,7 +94,7 @@ class _DetailScreenState extends State<DetailScreen>
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      AppColors.bgSurface.withOpacity(0.5),
+                      AppColors.bgSurface.withValues(alpha:0.5),
                       AppColors.bg,
                     ],
                   ),
@@ -107,7 +106,7 @@ class _DetailScreenState extends State<DetailScreen>
                     Container(
                       width: 200,
                       height: 200,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: RadialGradient(
                           colors: [
@@ -118,7 +117,7 @@ class _DetailScreenState extends State<DetailScreen>
                     ),
                     Positioned(
                       bottom: 20,
-                      child: PerfumeBottleWidget(perfume: p, size: 200),
+                      child: Image.asset(widget.perfume.image)
                     ),
                   ],
                 ),
@@ -196,23 +195,17 @@ class _DetailScreenState extends State<DetailScreen>
                             children: List.generate(
                               5,
                               (i) => Icon(
-                                i < p.rating.floor()
+                                i < num.parse(p.rating)
                                     ? Icons.star
-                                    : (i < p.rating
+                                    : (i < num.parse(p.rating)
                                           ? Icons.star_half
                                           : Icons.star_border),
-                                color: AppColors.gold,
+                                color: Colors.amber,
                                 size: 16,
                               ),
                             ),
                           ),
-                          Text(
-                            '${_formatVotes(p.votes)} ratings',
-                            style: const TextStyle(
-                              color: AppColors.creamDim,
-                              fontSize: 11,
-                            ),
-                          ),
+
                         ],
                       ),
                       const Spacer(),
@@ -278,13 +271,10 @@ class _DetailScreenState extends State<DetailScreen>
       bottomNavigationBar: _AddToCollectionBar(perfume: p),
     );
   }
-
-  String _formatVotes(int v) =>
-      v >= 1000 ? '${(v / 1000).toStringAsFixed(1)}k' : '$v';
 }
 
 class _RatingBadge extends StatelessWidget {
-  final double rating;
+  final String rating;
   const _RatingBadge({required this.rating});
 
   @override
@@ -304,7 +294,7 @@ class _RatingBadge extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '$rating',
+            rating,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -338,9 +328,9 @@ class _GenderBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: c.withOpacity(0.12),
+        color: c.withValues(alpha:0.12),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: c.withOpacity(0.3)),
+        border: Border.all(color: c.withValues(alpha:0.3)),
       ),
       child: Text(
         gender,
@@ -491,7 +481,7 @@ class _PyramidRow extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.15),
+              color: color.withValues(alpha:0.15),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: color, size: 16),
@@ -521,13 +511,13 @@ class _PyramidRow extends StatelessWidget {
                           vertical: 3,
                         ),
                         decoration: BoxDecoration(
-                          color: color.withOpacity(0.1),
+                          color: color.withValues(alpha:0.1),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
                           n,
                           style: TextStyle(
-                            color: color.withOpacity(0.9),
+                            color: color.withValues(alpha:0.9),
                             fontSize: 12,
                           ),
                         ),
@@ -565,7 +555,7 @@ class _PerformanceTab extends StatelessWidget {
           progress: _sillageProgress(perfume.sillage),
         ),
         const SizedBox(height: 10),
-        _PerformanceItem(
+        const _PerformanceItem(
           label: 'Price / Value',
           value: 'Good Value',
           icon: Icons.monetization_on_outlined,
@@ -748,9 +738,9 @@ class _AddToCollectionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.bgCard,
-        border: const Border(top: BorderSide(color: AppColors.divider)),
+        border: Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: Row(
         children: [
