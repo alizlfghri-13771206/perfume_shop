@@ -236,7 +236,7 @@ class _GridView extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => DetailScreen(perfume: perfumes[i]),
+            builder: (_) => PerfumeProductScreen(perfume: perfumes[i]),
           ),
         ),
         child: Container(
@@ -327,7 +327,7 @@ class _ListView extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => DetailScreen(perfume: perfumes[i]),
+            builder: (_) => PerfumeProductScreen(perfume: perfumes[i]),
           ),
         ),
         child: Container(

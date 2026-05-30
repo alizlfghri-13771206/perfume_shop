@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/models/events.dart';
 import 'package:parfumo_ui/theme/app_theme.dart';
 import 'package:parfumo_ui/models/perfume.dart';
 import 'package:parfumo_ui/screens/detail_screen.dart';
@@ -40,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   List<Widget> _buildIndicator() {
     List<Widget> indicators = [];
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 7; i++) {
       if (i == currentIndex) {
         indicators.add(_indicator(true));
       } else {
@@ -55,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     if (!mounted) return;
 
-    final nextIndex = (currentIndex + 1) % 5;
+    final nextIndex = (currentIndex + 1) % 7;
 
     pageController.animateToPage(
       nextIndex,
@@ -86,14 +85,12 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    // ── تنها تغییر: گرفتن سایز صفحه ──
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    // نسبت‌های نسبی بر اساس یک صفحه مرجع (800×390)
-    final heroHeight = screenHeight * 0.24; // ≈200 روی 800px
+    final heroHeight = screenHeight * 0.24; 
     final cardListHeight = screenHeight * 0.24;
-    final cardWidth = screenWidth * 0.38; // ≈155 روی 390px
+    final cardWidth = screenWidth * 0.38;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -104,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen>
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
             child: Column(
               children: [
+
                 // HEADER
                 const Column(
                   children: [
@@ -124,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ],
                 ),
 
-                // search bar
+                // SEARCH BAR
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 16, 5, 0),
                   child: GestureDetector(
@@ -193,18 +191,18 @@ class _HomeScreenState extends State<HomeScreen>
                               imageLeftFraction: -0.1,
                             ),
                             _HeroCard(
+                              perfume: mockPerfumes[6],
+                              imageHeightFraction: 1.05,
+                              imageWidthFraction: 0.51,
+                              imageTopFraction: -0.12,
+                              imageLeftFraction: -0.1,
+                            ),
+                            _HeroCard(
                               perfume: mockPerfumes[2],
                               imageHeightFraction: 1.0,
                               imageWidthFraction: 0.47,
                               imageTopFraction: 0.0,
                               imageLeftFraction: -0.05,
-                            ),
-                            _HeroCard(
-                              perfume: mockPerfumes[3],
-                              imageHeightFraction: 1.05,
-                              imageWidthFraction: 0.51,
-                              imageTopFraction: -0.08,
-                              imageLeftFraction: -0.08,
                             ),
                             _HeroCard(
                               perfume: mockPerfumes[4],
@@ -213,11 +211,25 @@ class _HomeScreenState extends State<HomeScreen>
                               imageTopFraction: -0.12,
                               imageLeftFraction: -0.1,
                             ),
+                            _HeroCard(
+                              perfume: mockPerfumes[5],
+                              imageHeightFraction: 1.05,
+                              imageWidthFraction: 0.51,
+                              imageTopFraction: -0.12,
+                              imageLeftFraction: -0.1,
+                            ),
+                            _HeroCard(
+                              perfume: mockPerfumes[3],
+                              imageHeightFraction: 1.05,
+                              imageWidthFraction: 0.51,
+                              imageTopFraction: -0.08,
+                              imageLeftFraction: -0.08,
+                            ),
                           ],
                         ),
                         Positioned(
-                          bottom: 10,
-                          right: screenWidth * 0.4,
+                          bottom: 20,
+                          right: screenWidth * 0.35,
                           child: Row(
                             children: _buildIndicator(),
                           ),
@@ -263,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen>
                           context,
                           MaterialPageRoute(
                             builder: (_) =>
-                                DetailScreen(perfume: mockPerfumes[index]),
+                                PerfumeProductScreen(perfume: mockPerfumes[index]),
                           ),
                         );
                       },
@@ -487,4 +499,3 @@ class _PerfumeCard extends StatelessWidget {
     );
   }
 }
-

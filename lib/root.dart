@@ -1,13 +1,10 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:parfumo_ui/models/perfume.dart';
 import 'package:parfumo_ui/screens/articles_screen.dart';
-import 'package:parfumo_ui/screens/collection_screen.dart';
 import 'package:parfumo_ui/screens/home_screen.dart';
-import 'package:parfumo_ui/screens/profile_screen.dart';
-import 'package:parfumo_ui/screens/search_screen.dart';
 import 'package:parfumo_ui/screens/shoping_cart_screen.dart';
 import 'package:parfumo_ui/screens/store_screen.dart';
-import 'package:parfumo_ui/theme/app_theme.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -17,21 +14,21 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
+  List<Perfume> selectedToBuy = [];
   int currentIndex = 0;
 
   List<IconData> icons = [
     Icons.home_outlined,
     Icons.storefront,
     Icons.shopping_cart,
-     Icons.article_outlined,
-    
+    Icons.article_outlined,
   ];
 
   List<Widget> pages() {
     return [
       const HomeScreen(),
       const StoreScreen(),
-      const ShopingCartScreen(),
+      ShopingCartScreen(inShoppingCartPerfumes: selectedToBuy),
       const ArticlesScreen(),
     ];
   }
@@ -82,11 +79,11 @@ class _RootPageState extends State<RootPage> {
           });
         },
       ),
-            floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
         onPressed: () {},
         shape: const CircleBorder(),
-        child: Image.asset("assets/images/tell.png", height:70),
+        child: Image.asset("assets/images/tell.png", height: 70),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
