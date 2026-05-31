@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parfumo_ui/models/perfume.dart';
+import 'package:parfumo_ui/theme/app_theme.dart';
 import 'package:parfumo_ui/utils/persian_numbers.dart';
 import "package:parfumo_ui/screens/widgets/new_perfumes_widget.dart";
 
@@ -28,69 +29,95 @@ class _ShopingCartScreenState extends State<ShopingCartScreen> {
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: widget.inShoppingCartPerfumes.isNotEmpty
-          ? Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 40.0, horizontal: 12),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: widget.inShoppingCartPerfumes.length,
-                      itemBuilder: (context, index) {
-                        return NewPerfumeWidget(
-                          perfumeList: widget.inShoppingCartPerfumes,
-                          index: index,
-                        );
-                      },
-                    ),
-                  ),
-                  const Divider(),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12),
+          child: Column(
+            children: widget.inShoppingCartPerfumes.isNotEmpty
+                ? [
+                    const SizedBox(height: 30),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Row(
-                          children: [
-                            const SizedBox(width: 5),
-                            Text(
-                              "${sumPrices().toString().farsiNumber}${"000".farsiNumber}",
-                              style: const TextStyle(
-                                fontSize: 25,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Text(
-                          "جمع کل : ",
-                          textDirection: TextDirection.rtl,
-                          style: TextStyle(fontSize: 24),
+                        Text(
+                          'سبد خرید',
+                          style: TextStyle(
+                            color: AppColors.cream,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            )
-          : const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "سبد خرید خالی است :|",
-                    textDirection: TextDirection.rtl,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "sans",
-                      color: Colors.black,
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: widget.inShoppingCartPerfumes.length,
+                        itemBuilder: (context, index) {
+                          return NewPerfumeWidget(
+                            perfumeList: widget.inShoppingCartPerfumes,
+                            index: index,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    const Divider(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const SizedBox(width: 5),
+                              Text(
+                                sumPrices().toString(),
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Text(
+                            "جمع کل : ",
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]
+                : [
+                    const SizedBox(height: 30),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'سبد خرید',
+                          style: TextStyle(
+                            color: AppColors.cream,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "سبد خرید خالی است :|",
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "sans",
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+          ),
+        ),
+      ),
     );
   }
 }

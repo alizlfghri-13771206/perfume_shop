@@ -105,15 +105,15 @@ class _HomeScreenState extends State<HomeScreen>
                 // HEADER
                 const Column(
                   children: [
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'فروشگاه عطرآمین',
+                          'عطرآمین',
                           style: TextStyle(
                             color: AppColors.cream,
-                            fontSize: 22,
+                            fontSize: 25,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

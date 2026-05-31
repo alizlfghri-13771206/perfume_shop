@@ -57,9 +57,27 @@ class _StoreScreenState extends State<StoreScreen> {
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           child: Column(
             children: [
+              const Column(
+                children: [
+                  SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'فروشگاه',
+                        style: TextStyle(
+                          color: AppColors.cream,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               // ── سرچ ──────────────────────────────────────────────────
               Padding(
-                padding: const EdgeInsets.fromLTRB(5, 6, 5, 0),
+                padding: const EdgeInsets.fromLTRB(5, 16, 5, 0),
                 child: GestureDetector(
                   onTap: () {},
                   child: Container(

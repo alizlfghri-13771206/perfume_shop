@@ -29,12 +29,13 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
             if (widget.perfume.inWishlist == true) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
+                  backgroundColor: Colors.blueAccent,
                   dismissDirection: DismissDirection.up,
                   duration: const Duration(milliseconds: 900),
                   content: Text(
                     "عطر ${widget.perfume.name} به سبد خرید اضافه شد",
                     textDirection: TextDirection.rtl,
-                    style: const TextStyle(fontFamily: "yekan", fontSize: 16),
+                    style: const TextStyle(fontFamily: "yekan", fontSize: 18),
                   ),
                 ),
               );
