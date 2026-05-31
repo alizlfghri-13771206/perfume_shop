@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/models/constants.dart';
-import 'package:parfumo_ui/models/perfume.dart';
+import 'package:atramin/models/constants.dart';
+import 'package:atramin/models/perfume.dart';
 
 class PerfumeProductScreen extends StatefulWidget {
   final Perfume perfume;

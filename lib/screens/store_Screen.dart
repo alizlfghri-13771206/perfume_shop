@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/models/perfume.dart';
-import 'package:parfumo_ui/theme/app_theme.dart';
-import 'package:parfumo_ui/screens/detail_screen.dart';
-import 'package:parfumo_ui/utils/persian_numbers.dart';
+import 'package:atramin/models/perfume.dart';
+import 'package:atramin/theme/app_theme.dart';
+import 'package:atramin/screens/detail_screen.dart';
+import 'package:atramin/utils/persian_numbers.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/models/perfume.dart';
-import 'package:parfumo_ui/utils/persian_numbers.dart';
+import 'package:atramin/models/perfume.dart';
 
 class NewPerfumeWidget extends StatelessWidget {
   final List<Perfume> perfumeList;

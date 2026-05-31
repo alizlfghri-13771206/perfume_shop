@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/models/events.dart';
-import 'package:parfumo_ui/theme/app_theme.dart';
+import 'package:atramin/models/events.dart';
+import 'package:atramin/theme/app_theme.dart';
 
 class ArticlesScreen extends StatefulWidget {
   const ArticlesScreen({super.key});

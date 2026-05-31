@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/theme/app_theme.dart';
-import 'package:parfumo_ui/models/perfume.dart';
-import 'package:parfumo_ui/screens/detail_screen.dart';
+import 'package:atramin/theme/app_theme.dart';
+import 'package:atramin/models/perfume.dart';
+import 'package:atramin/screens/detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnim;
   int currentIndex = 0;
+  
 
   int _selectedCategory = 0;
   final PageController pageController = PageController(initialPage: 0);

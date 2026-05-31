@@ -1,12 +1,12 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:atramin/screens/articles_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:parfumo_ui/models/perfume.dart';
-import 'package:parfumo_ui/screens/articles_screen.dart';
-import 'package:parfumo_ui/screens/contact_us.dart';
-import 'package:parfumo_ui/screens/home_screen.dart';
-import 'package:parfumo_ui/screens/shoping_cart_screen.dart';
-import 'package:parfumo_ui/screens/store_screen.dart';
+import 'package:atramin/models/perfume.dart';
+import 'package:atramin/screens/contact_us.dart';
+import 'package:atramin/screens/home_screen.dart';
+import 'package:atramin/screens/shoping_cart_screen.dart';
+import 'package:atramin/screens/store_screen.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});

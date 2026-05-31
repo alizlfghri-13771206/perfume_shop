@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import "package:parfumo_ui/root.dart";
+import "package:atramin/root.dart";
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

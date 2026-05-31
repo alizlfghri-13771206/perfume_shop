@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/models/perfume.dart';
-import 'package:parfumo_ui/theme/app_theme.dart';
-import "package:parfumo_ui/screens/widgets/new_perfumes_widget.dart";
+import 'package:atramin/models/perfume.dart';
+import 'package:atramin/theme/app_theme.dart';
+import "package:atramin/screens/widgets/new_perfumes_widget.dart";
 
 class ShopingCartScreen extends StatefulWidget {
   final List<Perfume> inShoppingCartPerfumes;

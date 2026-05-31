@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:parfumo_ui/root.dart';
-import 'package:parfumo_ui/theme/app_theme.dart';
-import "package:parfumo_ui/screens/splash_screen.dart";
+import 'package:atramin/theme/app_theme.dart';
+import "package:atramin/screens/splash_screen.dart";
 
 void main() {
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/models/constants.dart';
+import 'package:atramin/models/constants.dart';
 
 class Perfume {
   final String price;

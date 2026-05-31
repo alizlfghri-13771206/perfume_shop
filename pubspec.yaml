@@ -1,5 +1,5 @@
-name: عطرآمین
-description: Parfumo UI Clone - Flutter
+name: atramin
+description: Atramin - Flutter
 
 publish_to: 'none'
 
@@ -12,6 +12,7 @@ dependencies:
   animated_bottom_navigation_bar: ^1.4.0
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
   material_color_utilities: ^0.13.0
   page_transition: ^2.2.2
 
@@ -19,6 +20,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icon/icon.png"
+  adaptive_icons_background: "#42BFDD"
+  adaptive_icons_foreground: "assets/images/icon/icon.png"
 
 flutter:
   uses-material-design: true
@@ -37,4 +45,3 @@ flutter:
     - family: laleh
       fonts:
         - asset: assets/fonts/Lalezar-Regular.ttf
-
