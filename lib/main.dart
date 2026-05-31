@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parfumo_ui/root.dart';
-import 'theme/app_theme.dart';
+// import 'package:parfumo_ui/root.dart';
+import 'package:parfumo_ui/theme/app_theme.dart';
+import "package:parfumo_ui/screens/splash_screen.dart";
 
 void main() {
 
@@ -16,7 +17,7 @@ class ParfumoApp extends StatelessWidget {
       title: 'Parfumo',
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
-      home: const RootPage(),
+      home: const SplashPage(),
     );
   }
 }

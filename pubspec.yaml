@@ -27,3 +27,14 @@ flutter:
     - assets/images/
     - assets/images/e/
     - assets/images/notes/
+    - assets/images/splash/
+    - assets/images/icon/
+
+  fonts:
+    - family: yekan
+      fonts:
+        - asset: assets/fonts/BYekan+.ttf
+    - family: laleh
+      fonts:
+        - asset: assets/fonts/Lalezar-Regular.ttf
+
