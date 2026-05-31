@@ -31,16 +31,16 @@ class _StoreScreenState extends State<StoreScreen> {
   List<Perfume> get _filtered {
     switch (_selectedCategory) {
       case 0:
-        return mockPerfumes.where((p) => p.gender != "مردانه").toList();
+        return Perfume.mockPerfumes.where((p) => p.gender != "مردانه").toList();
       case 1:
-        return mockPerfumes.where((p) => p.gender != "زنانه").toList();
+        return Perfume.mockPerfumes.where((p) => p.gender != "زنانه").toList();
       case 2:
-        return mockPerfumes.where((x) => x.hasDecant == true).toList();
+        return Perfume.mockPerfumes.where((x) => x.hasDecant == true).toList();
       case 3:
-        return mockPerfumes;
+        return Perfume.mockPerfumes;
 
       default:
-        return mockPerfumes; // اینجا return نداشت
+        return Perfume.mockPerfumes; // اینجا return نداشت
     }
   }
 
@@ -211,22 +211,11 @@ class _StoreScreenState extends State<StoreScreen> {
               // ── گرید ──────────────────────────────────────────────────
               Expanded(
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 250),
                   transitionBuilder: (child, animation) {
-                    final slideAnimation = Tween<Offset>(
-                      begin: const Offset(0.3, 0), // از راست
-                      end: Offset.zero,
-                    ).animate(CurvedAnimation(
-                      parent: animation,
-                      curve: Curves.linear,
-                    ));
-
                     return FadeTransition(
                       opacity: animation,
-                      child: SlideTransition(
-                        position: slideAnimation,
-                        child: child,
-                      ),
+                      child: child,
                     );
                   },
                   child: _filtered.isEmpty
@@ -234,13 +223,14 @@ class _StoreScreenState extends State<StoreScreen> {
                           key: ValueKey('empty'),
                           child: Text(
                             'محصولی یافت نشد',
-                            style:
-                                TextStyle(color: Colors.black38, fontSize: 14),
+                            style: TextStyle(
+                              color: Colors.black38,
+                              fontSize: 14,
+                            ),
                           ),
                         )
                       : GridView.builder(
-                          key:
-                              gridKey, // ← این باعث میشه AnimatedSwitcher تشخیص بده محتوا عوض شده
+                          key: ValueKey(_filtered.length),
                           padding: const EdgeInsets.only(bottom: 16),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -252,21 +242,25 @@ class _StoreScreenState extends State<StoreScreen> {
                           itemCount: _filtered.length,
                           itemBuilder: (context, index) {
                             final perfume = _filtered[index];
+
                             return _PerfumeCard(
                               perfume: perfume,
                               cardWidth: (screenWidth - 42) / 2,
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      PerfumeProductScreen(perfume: perfume),
-                                ),
-                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => PerfumeProductScreen(
+                                      perfume: perfume,
+                                    ),
+                                  ),
+                                );
+                              },
                             );
                           },
-                        ),s
+                        ),
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -349,7 +343,7 @@ class _PerfumeCard extends StatelessWidget {
                         child: Text(
                           "${perfume.price.farsiNumber} تومان",
                           style: const TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w600),
+                              fontSize: 12, fontWeight: FontWeight.w600),
                           textDirection: TextDirection.rtl,
                         ),
                       )

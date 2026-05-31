@@ -15,11 +15,10 @@ class ShopingCartScreen extends StatefulWidget {
 class _ShopingCartScreenState extends State<ShopingCartScreen> {
   int sumPrices() {
     int sum = 0;
-
     if (widget.inShoppingCartPerfumes.isNotEmpty) {
-      int lengthOfPerfumes = widget.inShoppingCartPerfumes.length;
-      for (int i = 0; i < lengthOfPerfumes; i++) {
-        sum = sum + int.parse(widget.inShoppingCartPerfumes[i].price);
+      int lengthOfPlant = widget.inShoppingCartPerfumes.length;
+      for (int i = 0; i < lengthOfPlant; i++) {
+        sum = sum + widget.inShoppingCartPerfumes[i].priceinInt;
       }
     }
     return sum;
@@ -31,7 +30,8 @@ class _ShopingCartScreenState extends State<ShopingCartScreen> {
     return Scaffold(
       body: widget.inShoppingCartPerfumes.isNotEmpty
           ? Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 12),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 40.0, horizontal: 12),
               child: Column(
                 children: [
                   Expanded(
@@ -54,15 +54,10 @@ class _ShopingCartScreenState extends State<ShopingCartScreen> {
                       children: [
                         Row(
                           children: [
-                            SizedBox(
-                              height: 20,
-                              child: Text("ssss")
-                            ),
                             const SizedBox(width: 5),
                             Text(
                               "${sumPrices().toString().farsiNumber}${"000".farsiNumber}",
                               style: const TextStyle(
-                                fontFamily: "laleh",
                                 fontSize: 25,
                                 color: Colors.black,
                               ),
@@ -72,7 +67,7 @@ class _ShopingCartScreenState extends State<ShopingCartScreen> {
                         const Text(
                           "جمع کل : ",
                           textDirection: TextDirection.rtl,
-                          style: TextStyle(fontFamily: "laleh", fontSize: 24),
+                          style: TextStyle(fontSize: 24),
                         ),
                       ],
                     ),
@@ -80,16 +75,12 @@ class _ShopingCartScreenState extends State<ShopingCartScreen> {
                 ],
               ),
             )
-          : Center(
+          : const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 100,
-                    child: Text("aas"),
-                  ),
-                  const Text(
-                    "سبد خرید تار عنکبوت بسته :|",
+                  Text(
+                    "سبد خرید خالی است :|",
                     textDirection: TextDirection.rtl,
                     style: TextStyle(
                       fontSize: 20,

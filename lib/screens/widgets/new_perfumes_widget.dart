@@ -1,26 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:parfumo_ui/models/perfume.dart';
 import 'package:parfumo_ui/utils/persian_numbers.dart';
 
 class NewPerfumeWidget extends StatelessWidget {
-    final List<Perfume> perfumeList;
-    final int index;
+  final List<Perfume> perfumeList;
+  final int index;
 
-  const NewPerfumeWidget({
-    super.key,
-    required this.perfumeList,
-    required this.index
-  }) ;
-
+  const NewPerfumeWidget(
+      {super.key, required this.perfumeList, required this.index});
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
-      onTap: () {
-
-      },
+      onTap: () {},
       child: Container(
         decoration: BoxDecoration(
           color: Colors.black12,
@@ -34,20 +26,15 @@ class NewPerfumeWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 30,
-                  width: 30,
-                  child: Text("تومان")
-                ),
                 const SizedBox(width: 3),
                 Text(
-                  perfumeList[index].price.toString().farsiNumber,
+                  perfumeList[index].price.toString(),
                   style: const TextStyle(
-                    fontFamily: "laleh",
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Colors.blue,
+                    color: Colors.black87,
                   ),
                 ),
               ],
@@ -57,20 +44,24 @@ class NewPerfumeWidget extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.amber.withValues(
-                      alpha: .8,
-                    ),
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          perfumeList[index].brandColor,
+                          Colors.white12
+                        ]),
                     shape: BoxShape.circle,
                   ),
-                  height: 60,
-                  width: 60,
+                  height: 65,
+                  width: 65,
                 ),
                 Positioned(
                   bottom: -5,
                   left: 0,
                   right: 0,
                   child: SizedBox(
-                    height: 80,
+                    height: 90,
                     child: Image.asset(
                       perfumeList[index].image,
                     ),
@@ -84,19 +75,19 @@ class NewPerfumeWidget extends StatelessWidget {
                     // mainAxisAlignment: MainAxisAlignment.,
                     children: [
                       Text(
-                        perfumeList[index].farsiBrand,
+                        perfumeList[index].name,
                         style: const TextStyle(
                           color: Colors.black,
                           fontFamily: "yekan",
-                          fontSize: 13,
+                          fontSize: 18,
                         ),
                       ),
                       Text(
-                        perfumeList[index].name,
+                        perfumeList[index].brand,
                         style: const TextStyle(
                           color: Colors.black45,
                           fontFamily: "yekan",
-                          fontSize: 18,
+                          fontSize: 14,
                         ),
                       ),
                     ],

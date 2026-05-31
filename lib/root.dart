@@ -1,7 +1,9 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:parfumo_ui/models/perfume.dart';
 import 'package:parfumo_ui/screens/articles_screen.dart';
+import 'package:parfumo_ui/screens/contact_us.dart';
 import 'package:parfumo_ui/screens/home_screen.dart';
 import 'package:parfumo_ui/screens/shoping_cart_screen.dart';
 import 'package:parfumo_ui/screens/store_screen.dart';
@@ -41,16 +43,16 @@ class _RootPageState extends State<RootPage> {
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           SizedBox(
-              height: 40,
-              width: 40,
+              height: 32,
+              width: 32,
               child: Image.asset("assets/images/profile.png")),
           SizedBox(
-              height: 140,
-              width: 140,
+              height: 130,
+              width: 130,
               child: Image.asset("assets/images/logo-h.png")),
           SizedBox(
-              height: 50,
-              width: 50,
+              height: 45,
+              width: 45,
               child: Image.asset("assets/images/notif.png")),
         ]),
       ),
@@ -67,7 +69,7 @@ class _RootPageState extends State<RootPage> {
         ),
         activeIndex: currentIndex,
         icons: icons,
-        iconSize: 30,
+        iconSize: 26,
         gapLocation: GapLocation.center,
         activeColor: Colors.blueAccent,
         inactiveColor: Colors.black45,
@@ -76,12 +78,19 @@ class _RootPageState extends State<RootPage> {
         onTap: (int value) {
           setState(() {
             currentIndex = value;
+            List<Perfume> buy = Perfume.addedToCartPlants();
+            selectedToBuy = buy;
           });
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
-        onPressed: () {},
+        backgroundColor: Colors.white,
+        onPressed: () {
+          Navigator.of(context).push(
+            PageTransition(
+                type: PageTransitionType.bottomToTop, child: const ContactUs()),
+          );
+        },
         shape: const CircleBorder(),
         child: Image.asset("assets/images/tell.png", height: 70),
       ),

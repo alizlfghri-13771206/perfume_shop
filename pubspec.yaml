@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   material_color_utilities: ^0.13.0
+  page_transition: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +26,4 @@ flutter:
   assets:
     - assets/images/
     - assets/images/e/
+    - assets/images/notes/

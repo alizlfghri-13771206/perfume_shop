@@ -25,7 +25,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'فروشگاه عطرآمین',
+                            'رویدادهای عطرآمین',
                             style: TextStyle(
                               color: AppColors.cream,
                               fontSize: 25,

@@ -177,49 +177,49 @@ class _HomeScreenState extends State<HomeScreen>
                           controller: pageController,
                           children: [
                             _HeroCard(
-                              perfume: mockPerfumes[0],
+                              perfume: Perfume.mockPerfumes[0],
                               imageHeightFraction: 1.2,
                               imageWidthFraction: 0.6,
                               imageTopFraction: -0.1,
                               imageLeftFraction: -0.15,
                             ),
                             _HeroCard(
-                              perfume: mockPerfumes[1],
+                              perfume: Perfume.mockPerfumes[1],
                               imageHeightFraction: 1.05,
                               imageWidthFraction: 0.49,
                               imageTopFraction: -0.1,
                               imageLeftFraction: -0.1,
                             ),
                             _HeroCard(
-                              perfume: mockPerfumes[6],
+                              perfume: Perfume.mockPerfumes[6],
                               imageHeightFraction: 1.05,
                               imageWidthFraction: 0.51,
                               imageTopFraction: -0.12,
                               imageLeftFraction: -0.1,
                             ),
                             _HeroCard(
-                              perfume: mockPerfumes[2],
+                              perfume: Perfume.mockPerfumes[2],
                               imageHeightFraction: 1.0,
                               imageWidthFraction: 0.47,
                               imageTopFraction: 0.0,
                               imageLeftFraction: -0.05,
                             ),
                             _HeroCard(
-                              perfume: mockPerfumes[4],
+                              perfume: Perfume.mockPerfumes[4],
                               imageHeightFraction: 1.05,
                               imageWidthFraction: 0.51,
                               imageTopFraction: -0.12,
                               imageLeftFraction: -0.1,
                             ),
                             _HeroCard(
-                              perfume: mockPerfumes[5],
+                              perfume: Perfume.mockPerfumes[5],
                               imageHeightFraction: 1.05,
                               imageWidthFraction: 0.51,
                               imageTopFraction: -0.12,
                               imageLeftFraction: -0.1,
                             ),
                             _HeroCard(
-                              perfume: mockPerfumes[3],
+                              perfume: Perfume.mockPerfumes[3],
                               imageHeightFraction: 1.05,
                               imageWidthFraction: 0.51,
                               imageTopFraction: -0.08,
@@ -266,16 +266,16 @@ class _HomeScreenState extends State<HomeScreen>
                     scrollDirection: Axis.horizontal,
                     reverse: true,
                     padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                    itemCount: mockPerfumes.length,
+                    itemCount: Perfume.mockPerfumes.length,
                     itemBuilder: (context, index) => _PerfumeCard(
-                      perfume: mockPerfumes[index],
+                      perfume: Perfume.mockPerfumes[index],
                       cardWidth: cardWidth,
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) =>
-                                PerfumeProductScreen(perfume: mockPerfumes[index]),
+                                PerfumeProductScreen(perfume: Perfume.mockPerfumes[index]),
                           ),
                         );
                       },
