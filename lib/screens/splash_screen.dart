@@ -48,115 +48,117 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _bgColor,
-      body: Stack(
-        children: [
-          // Subtle top decoration
-          Positioned(
-            top: -80,
-            right: -80,
-            child: Container(
-              width: 210,
-              height: 210,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _primaryBlue.withValues(alpha: 0.08),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // Subtle top decoration
+            Positioned(
+              top: -80,
+              right: -80,
+              child: Container(
+                width: 210,
+                height: 210,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _primaryBlue.withValues(alpha: 0.08),
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: -60,
-            left: -60,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _primaryBlue.withValues(alpha: 0.06),
+            Positioned(
+              bottom: -60,
+              left: -60,
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _primaryBlue.withValues(alpha: 0.06),
+                ),
               ),
             ),
-          ),
-
-          Column(
-            children: [
-              SafeArea(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () => Navigator.of(context).push(
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const RootPage())),
-                      style: TextButton.styleFrom(
-                        foregroundColor: _textGrey,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                      ),
-                      child: const Text(
-                        'رد کردن',
-                        style: TextStyle(
-                          fontFamily: 'laleh',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+        
+            Column(
+              children: [
+                SafeArea(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () => Navigator.of(context).push(
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: const RootPage())),
+                        style: TextButton.styleFrom(
+                          foregroundColor: _textGrey,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                        ),
+                        child: const Text(
+                          'رد کردن',
+                          style: TextStyle(
+                            fontFamily: 'laleh',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-
-              // PageView
-              Expanded(
-                child: PageView(
-                  controller: _controller,
-                  onPageChanged: (v) => setState(() => _currentIndex = v),
-                  children: const [
-                    _SplashPage1(),
-                    _SplashPage2(),
-                    _SplashPage3(),
-                  ],
+        
+                // PageView
+                Expanded(
+                  child: PageView(
+                    controller: _controller,
+                    onPageChanged: (v) => setState(() => _currentIndex = v),
+                    children: const [
+                      _SplashPage1(),
+                      _SplashPage2(),
+                      _SplashPage3(),
+                    ],
+                  ),
                 ),
-              ),
-
-              // Indicators + Button row
-              Padding(
-                padding: const EdgeInsets.fromLTRB(28, 0, 28, 40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Indicators
-                    Row(children: _buildIndicators()),
-
-                    // Button: arrow on pages 1&2, text button on page 3
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      child: _currentIndex < 2
-                          ? _ArrowButton(
-                              key: const ValueKey('arrow'),
-                              onTap: () {
-                                _controller.nextPage(
-                                  duration: const Duration(milliseconds: 350),
-                                  curve: Curves.easeInOut,
-                                );
-                              },
-                            )
-                          : _StartButton(
-                              key: const ValueKey('start'),
-                              onTap: () => Navigator.of(context).push(
-                                  PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: const RootPage())),
-                            ),
-                    ),
-                  ],
+        
+                // Indicators + Button row
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(28, 0, 28, 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Indicators
+                      Row(children: _buildIndicators()),
+        
+                      // Button: arrow on pages 1&2, text button on page 3
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: _currentIndex < 2
+                            ? _ArrowButton(
+                                key: const ValueKey('arrow'),
+                                onTap: () {
+                                  _controller.nextPage(
+                                    duration: const Duration(milliseconds: 350),
+                                    curve: Curves.easeInOut,
+                                  );
+                                },
+                              )
+                            : _StartButton(
+                                key: const ValueKey('start'),
+                                onTap: () => Navigator.of(context).push(
+                                    PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: const RootPage())),
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -387,7 +389,7 @@ class _StartButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushReplacement(PageTransition(
-            type: PageTransitionType.rightToLeft, child: const RootPage(),duration:Duration(seconds: 1) ));
+            type: PageTransitionType.rightToLeft, child: const RootPage(),duration:Duration(milliseconds: 400) ));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),

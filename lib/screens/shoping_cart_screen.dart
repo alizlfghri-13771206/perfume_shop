@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parfumo_ui/models/perfume.dart';
 import 'package:parfumo_ui/theme/app_theme.dart';
-import 'package:parfumo_ui/utils/persian_numbers.dart';
 import "package:parfumo_ui/screens/widgets/new_perfumes_widget.dart";
 
 class ShopingCartScreen extends StatefulWidget {
@@ -35,7 +34,6 @@ class _ShopingCartScreenState extends State<ShopingCartScreen> {
           child: Column(
             children: widget.inShoppingCartPerfumes.isNotEmpty
                 ? [
-                    const SizedBox(height: 30),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

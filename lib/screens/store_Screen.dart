@@ -59,7 +59,6 @@ class _StoreScreenState extends State<StoreScreen> {
             children: [
               const Column(
                 children: [
-                  SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -361,7 +360,7 @@ class _PerfumeCard extends StatelessWidget {
                         child: Text(
                           "${perfume.price.farsiNumber} تومان",
                           style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w600),
+                              fontSize: 9, fontWeight: FontWeight.w600),
                           textDirection: TextDirection.rtl,
                         ),
                       )

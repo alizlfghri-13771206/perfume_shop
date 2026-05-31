@@ -20,7 +20,6 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
             children: [
               const Column(
                     children: [
-                      SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

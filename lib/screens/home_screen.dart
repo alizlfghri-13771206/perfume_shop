@@ -105,7 +105,6 @@ class _HomeScreenState extends State<HomeScreen>
                 // HEADER
                 const Column(
                   children: [
-                    SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

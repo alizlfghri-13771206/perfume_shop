@@ -100,6 +100,24 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
                   // ۱. اطلاعات اولیه و تصویر محصول
                   _buildProductHeaderSection(),
 
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5,vertical: 14),
+                    margin: EdgeInsets.symmetric(vertical: 15),
+                    decoration:BoxDecoration(
+                      borderRadius:BorderRadius.circular(25),
+                      border: Border.all(color: Colors.blueAccent.withValues(alpha:.3))
+                    ),
+                    child: Text(widget.perfume.description,
+                    textDirection:TextDirection.rtl,
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.32,
+                      color: Colors.black54,
+                      fontFamily: "yekan"
+                    ),),
+                  ),),
+
                   // ۲. بخش قیمت و انتخاب حجم
                   _buildPriceAndSizeSection(),
 
@@ -260,7 +278,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           // قیمت
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -268,20 +286,20 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
               Text(
                 widget.perfume.price,
                 style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 21,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),
               const SizedBox(width: 5),
               const Text('تومان',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600)),
             ],
           ),
           const SizedBox(height: 16),
           const Row(
             children: [
               Text('انتخاب حجم',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ],
           ),
           const SizedBox(height: 18),
@@ -317,7 +335,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
                         color: isSelected
                             ? Colors.white
                             : const Color.fromARGB(172, 0, 0, 0),
-                        fontSize: 13,
+                        fontSize: 10,
                         fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -354,7 +372,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 3,
-              crossAxisSpacing: 16,
+              crossAxisSpacing: 14,
               mainAxisSpacing: 8,
             ),
             itemBuilder: (context, index) {
@@ -364,12 +382,12 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
                 children: [
                   Text(specs[index]['title']!,
                       style:
-                          const TextStyle(color: Colors.black87, fontSize: 16)),
+                          const TextStyle(color: Colors.black87, fontSize: 10,fontWeight: FontWeight.w600)),
                   const SizedBox(height: 4),
                   Text(specs[index]['value']!,
                       style: const TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
                           color: Colors.blueAccent)),
                 ],
               );
@@ -433,7 +451,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
                     usage['label'] as String,
                     textAlign: TextAlign.left, // تراز شدن خود متن به سمت چپ
                     style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w700),
+                        fontSize: 12, fontWeight: FontWeight.w700),
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -454,7 +472,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
                             color: (usage['color'] == Colors.amber[200])
                                 ? Colors.black54
                                 : Colors.white,
-                            fontSize: 14,
+                            fontSize: 11,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -483,7 +501,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
               Text(
                 item['title'] as String,
                 style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF2C3E50)),
               ),
@@ -586,7 +604,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
                 children: [
                   // شکل نوت ها
                   CircleAvatar(
-                    radius: 20,
+                    radius: 18,
                     backgroundImage: NoteImages.all[item] != null
                         ? AssetImage(NoteImages.all[item]!)
                         : null,
@@ -598,7 +616,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
                   Text(
                     item,
                     style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w500),
+                        fontSize: 12, fontWeight: FontWeight.w500),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -654,7 +672,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
                             color: (accord['color'] == Colors.amber[200])
                                 ? Colors.black54
                                 : Colors.white,
-                            fontSize: 14,
+                            fontSize: 11,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -709,7 +727,7 @@ class _PerfumeProductScreenState extends State<PerfumeProductScreen> {
           child: Text(
             title,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: isActive ? FontWeight.w800 : FontWeight.w500,
               color: isActive ? Colors.blueAccent : Colors.grey,
             ),
